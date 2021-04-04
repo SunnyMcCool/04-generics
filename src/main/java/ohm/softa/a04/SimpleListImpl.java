@@ -6,7 +6,7 @@ import java.util.Iterator;
  * @author Peter Kurfer
  * Created on 10/6/17.
  */
-public class SimpleListImpl <T> implements SimpleList {
+public class SimpleListImpl <T> implements SimpleList<T> {
 
 	private ListElement<T> head;
 	private int size;
@@ -19,41 +19,22 @@ public class SimpleListImpl <T> implements SimpleList {
 	 * Add an object to the end of the list
 	 * @param item item to add
 	 */
-	public void add(Object item){
+	public void add(T item){
 		/* special case empty list */
 		if(head == null){
-			head = new ListElement(item);
+			head = new ListElement<>(item);
 		}else {
 			/* any other list length */
-			ListElement current = head;
+			ListElement<T> current = head;
 			while (current.getNext() != null){
 				current = current.getNext();
 			}
-			current.setNext(new ListElement(item));
+			current.setNext(new ListElement<>(item));
 		}
 		size++;
 	}
 
-	// the purpose is to add a default instance (using the default constructor) to the list
-	//Hint: this method aims at the instantiation problem of generics.
-	@Override
-	public void addDefault(Object item) {
-		if(head == null){
-			head = new ListElement(item);
-		}else {
-			/* any other list length */
-			ListElement current = head;
-			while (current.getNext() != null){
-				current = current.getNext();
-			}
-			current.setNext(new ListElement(item));
-		}
-		size++;
-	}
-
-	/**
-	 * @return size of the list
-	 */
+	// Gibt Listenlänge zurück
 	public int size() {
 		return size;
 	}
@@ -89,17 +70,13 @@ public class SimpleListImpl <T> implements SimpleList {
 
 		private ListElement<T> current = head;
 
-		/**
-		 * @inheritDoc
-		 */
+		// inheritDoc
 		@Override
 		public boolean hasNext() {
 			return current != null;
 		}
 
-		/**
-		 * @inheritDoc
-		 */
+		// inheritDoc
 		@Override
 		public T next() {
 			T tmp = current.getItem();
@@ -112,7 +89,7 @@ public class SimpleListImpl <T> implements SimpleList {
 	 * Helper class for the linked list
 	 * can be static because the ListElement does not need to access the SimpleList instance
 	 */
-	private static class ListElement <T>{
+	private static class ListElement<T>{
 		private T item;
 		private ListElement<T> next;
 
@@ -145,3 +122,4 @@ public class SimpleListImpl <T> implements SimpleList {
 	}
 
 }
+
