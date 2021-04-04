@@ -6,9 +6,9 @@ import java.util.Iterator;
  * @author Peter Kurfer
  * Created on 10/6/17.
  */
-public class SimpleListImpl implements SimpleList {
+public class SimpleListImpl <T> implements SimpleList {
 
-	private ListElement head;
+	private ListElement<T> head;
 	private int size;
 
 	public SimpleListImpl() {
@@ -21,6 +21,23 @@ public class SimpleListImpl implements SimpleList {
 	 */
 	public void add(Object item){
 		/* special case empty list */
+		if(head == null){
+			head = new ListElement(item);
+		}else {
+			/* any other list length */
+			ListElement current = head;
+			while (current.getNext() != null){
+				current = current.getNext();
+			}
+			current.setNext(new ListElement(item));
+		}
+		size++;
+	}
+
+	// the purpose is to add a default instance (using the default constructor) to the list
+	//Hint: this method aims at the instantiation problem of generics.
+	@Override
+	public void addDefault(Object item) {
 		if(head == null){
 			head = new ListElement(item);
 		}else {
@@ -60,7 +77,7 @@ public class SimpleListImpl implements SimpleList {
 	 * @inheritDoc
 	 */
 	@Override
-	public Iterator iterator() {
+	public Iterator<T> iterator() {
 		return new SimpleIterator();
 	}
 
@@ -70,7 +87,7 @@ public class SimpleListImpl implements SimpleList {
 	 */
 	private class SimpleIterator implements Iterator {
 
-		private ListElement current = head;
+		private ListElement<T> current = head;
 
 		/**
 		 * @inheritDoc
@@ -84,8 +101,8 @@ public class SimpleListImpl implements SimpleList {
 		 * @inheritDoc
 		 */
 		@Override
-		public Object next() {
-			Object tmp = current.getItem();
+		public T next() {
+			T tmp = current.getItem();
 			current = current.getNext();
 			return tmp;
 		}
@@ -95,11 +112,11 @@ public class SimpleListImpl implements SimpleList {
 	 * Helper class for the linked list
 	 * can be static because the ListElement does not need to access the SimpleList instance
 	 */
-	private static class ListElement {
-		private Object item;
-		private ListElement next;
+	private static class ListElement <T>{
+		private T item;
+		private ListElement<T> next;
 
-		ListElement(Object item) {
+		ListElement(T item) {
 			this.item = item;
 			this.next = null;
 		}
@@ -107,14 +124,14 @@ public class SimpleListImpl implements SimpleList {
 		/**
 		 * @return get object in the element
 		 */
-		public Object getItem() {
+		public T getItem() {
 			return item;
 		}
 
 		/**
 		 * @return successor of the ListElement - may be NULL
 		 */
-		public ListElement getNext() {
+		public ListElement<T> getNext() {
 			return next;
 		}
 
@@ -122,7 +139,7 @@ public class SimpleListImpl implements SimpleList {
 		 * Sets the successor of the ListElement
 		 * @param next ListElement
 		 */
-		public void setNext(ListElement next) {
+		public void setNext(ListElement<T> next) {
 			this.next = next;
 		}
 	}

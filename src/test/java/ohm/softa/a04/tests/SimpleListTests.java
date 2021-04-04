@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Peter Kurfer
  * Created on 10/6/17.
  */
-public class SimpleListTests {
+public class SimpleListTests<T> {
 
 	private final Logger logger = LogManager.getLogger();
-	private SimpleList testList;
+	private SimpleList<Integer> testList;
 
 	@BeforeEach
 	void setup(){
-		testList = new SimpleListImpl();
+		testList = new SimpleListImpl<Integer>();
 
 		testList.add(1);
 		testList.add(2);
