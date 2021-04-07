@@ -13,10 +13,7 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * @author Peter Kurfer
- * Created on 10/6/17.
- */
+
 public class SimpleListTests {
 
 	private final Logger logger = LogManager.getLogger();
@@ -24,8 +21,10 @@ public class SimpleListTests {
 
 	@BeforeEach
 	void setup(){
+		// Hier darf kein <T> eingesetzt werden
 		testList = new SimpleListImpl<>();
 
+		// Liste wird gefüllt
 		testList.add(1);
 		testList.add(2);
 		testList.add(3);

@@ -4,7 +4,7 @@ package ohm.softa.a04;
 import java.util.function.Function;
 
 public interface SimpleList <T> extends Iterable<T>{
-	// Add a given object to the back of the list.
+	// Fügt Objekt ans Listenende
 	void add(T item);
 
 	// gibt Länge zurück
@@ -16,7 +16,8 @@ public interface SimpleList <T> extends Iterable<T>{
 		try {
 			this.add(c.newInstance());
 		}
-		// Wenn nicht möglich
+		// Wenn Erstellung nicht möglich
+		// Exception werfen
 		catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
@@ -25,18 +26,19 @@ public interface SimpleList <T> extends Iterable<T>{
 
 	// T = Typ des Inputs
 	// R = Typ des Ergebnisses
-	// default <R> SimpleList<R> ???
+	// default <R> SimpleList<R> -> was wird hier zurückgegeben? was passiert hier eigentlich?
 	default <R> SimpleList<R> map (Function<T,R> transform)
 	{
 		// Neue, leere Liste
 		SimpleList<R> result;
 
-		// Wenn neue Instanz möglich
+		// Wenn Erstellung von neuer Instanz möglich
 		try {
 			result = (SimpleList<R>) this.getClass().newInstance();
 		}
+		// Wenn Erstellung von neuer Instanz nicht möglich
 		catch (InstantiationException | IllegalAccessException e) {
-			result = new SimpleListImpl<>();
+			result = new SimpleListImpl<R>();
 		}
 
 		// Für jedes T wird zu R umgewandelt und hinzugefügt
@@ -46,11 +48,8 @@ public interface SimpleList <T> extends Iterable<T>{
 		return result;
 	}
 
-
-	/**
-	 * Generate a new list using the given filter instance.
-	 * @return a new, filtered list
-	 */
+	// Generiert neue Liste und verwendet den Filter
+	// gibt gefilterte Liste zurück
 	default SimpleList<T> filter(SimpleFilter<T> filter){
 
 		// Neue, leere Liste
@@ -59,7 +58,9 @@ public interface SimpleList <T> extends Iterable<T>{
 		// Wenn neue Instanz möglich
 		try {
 			result = (SimpleList<T>) getClass().newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+		}
+		// Wenn neue Instanz nicht möglich
+		catch (InstantiationException | IllegalAccessException e) {
 			// you can replace the type arguments required to invoke the constructor
 			// of a generic class with an empty set of type arguments (<>) as long as
 			// the compiler can determine, or infer, the type arguments from the context
@@ -73,6 +74,7 @@ public interface SimpleList <T> extends Iterable<T>{
 				result.add(t);
 			}
 		}
+		// Neue Liste zurückgeben
 		return result;
 	}
 }
