@@ -21,7 +21,7 @@ public class SimpleListTests {
 
 	@BeforeEach
 	void setup(){
-		// Hier darf kein <T> eingesetzt werden
+		// Hier darf kein <T> eingesetzt werden, sondern konkreter Datentyp
 		testList = new SimpleListImpl<>();
 
 		// Liste wird gefüllt
@@ -76,6 +76,7 @@ public class SimpleListTests {
 	@Test
 	void testSimpleListMap(){
 		logger.info("Testing default map method");
+		// Einsetzen von Funktion (nur jedes zweite Element)
 		SimpleList<Integer> mapped = testList.map(i -> i + 1);
 		assertEquals(5, mapped.size());
 		for(Integer i : mapped) {
@@ -87,6 +88,7 @@ public class SimpleListTests {
 	@Test
 	void testMap() {
 		logger.info("Testing default map method by mapping every value to its square");
+		// Math.Pow = Basis, Exponent
 		SimpleList<Double> result = testList.map(i -> Math.pow(i, 2));
 		Iterator<Integer> origIt = testList.iterator();
 		Iterator<Double> mapIt = result.iterator();

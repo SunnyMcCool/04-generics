@@ -2,7 +2,7 @@ package ohm.softa.a04;
 
 import java.util.Iterator;
 
-public class SimpleListImpl <T> implements SimpleList<T> {
+public class SimpleListImpl<T> implements SimpleList<T> {
 
 	// Listenanfang und -größe deklarieren
 	private ListElement<T> head;
@@ -39,15 +39,11 @@ public class SimpleListImpl <T> implements SimpleList<T> {
 		return size;
 	}
 
-	/**
-	 * Get a new SimpleList instance with all items of this list which match the given filter
-	 * @param filter SimpleFilter instance
-	 * @return new SimpleList instance
-	 */
 	// Neue SimpleList-Instanz mit allen Items der Liste, die Filterkriterien erfüllen
 	// filter ist Instanz, die geprüft wird
 	// result ist Liste die zurückgegeben wird
-	public SimpleList filter(SimpleFilter filter){
+	// Wird überschrieben
+/*	public SimpleList filter(SimpleFilter filter){
 		// neue Ergebnisliste wird erstellt
 		SimpleList result = new SimpleListImpl();
 
@@ -60,7 +56,7 @@ public class SimpleListImpl <T> implements SimpleList<T> {
 			}
 		}
 		return result;
-	}
+	}*/
 
 	// Wurde vererbt
 	// macht "foreachbar", zuerst Iterable, dann Iterator
@@ -69,13 +65,9 @@ public class SimpleListImpl <T> implements SimpleList<T> {
 		return new SimpleIterator();
 	}
 
-	/**
-	 * Helper class which implements the Iterator interface
-	 * Has to be non static because otherwise it could not access the head of the list
-	 */
 	// Hilfsklasse die Iterator-Interface implementiert
 	// non-static, da es sonst nicht das Element am Listenanfang erreichen würde
-	private class SimpleIterator implements Iterator {
+	private class SimpleIterator implements Iterator<T> {
 		// Zugriff auf Listenanfang
 		private ListElement<T> current = head;
 
@@ -116,7 +108,6 @@ public class SimpleListImpl <T> implements SimpleList<T> {
 			return item;
 		}
 
-		// @return successor of the ListElement - may be NULL
 		// gibt Nachfolger des Listenelements zurück, evtl. null
 		public ListElement<T> getNext() { return next; }
 
