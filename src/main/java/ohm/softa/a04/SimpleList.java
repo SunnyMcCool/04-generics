@@ -16,10 +16,9 @@ public interface SimpleList<T> extends Iterable<T>{
 		// neue Instanz erstellen und hinzufügen
 		try {
 			this.add(c.getDeclaredConstructor().newInstance());
-
 		}
-		// Wenn Erstellung nicht möglich
-		// Exception werfen
+
+		// Wenn Erstellung nicht möglich, Exception werfen
 		catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +40,7 @@ public interface SimpleList<T> extends Iterable<T>{
 		}
 		// Wenn Erstellung von neuer Instanz nicht möglich
 		catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-			result = new SimpleListImpl<R>();
+			result = new SimpleListImpl<>();
 		}
 
 		// Für jedes T wird zu R umgewandelt und hinzugefügt
@@ -67,7 +66,7 @@ public interface SimpleList<T> extends Iterable<T>{
 			// you can replace the type arguments required to invoke the constructor
 			// of a generic class with an empty set of type arguments (<>) as long as
 			// the compiler can determine, or infer, the type arguments from the context
-			result = new SimpleListImpl<T>();
+			result = new SimpleListImpl<>();
 		}
 
 		// Für jedes T wird Filter getestet und hinzugefügt

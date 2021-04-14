@@ -18,7 +18,7 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 	public void add(T item){
 		// leere Liste
 		if(head == null){
-			head = new ListElement<T>(item);
+			head = new ListElement<>(item);
 		}
 
 		// Liste mit mind. einem Element
@@ -29,7 +29,7 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 				current = current.getNext();
 			}
 			// Als Nachfolger neues Listenelement setzen
-			current.setNext(new ListElement<T>(item));
+			current.setNext(new ListElement<>(item));
 		}
 		size++;
 	}
@@ -39,9 +39,7 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 		return size;
 	}
 
-	// Neue SimpleList-Instanz mit allen Items der Liste, die Filterkriterien erfüllen
-	// filter ist Instanz, die geprüft wird
-	// result ist Liste die zurückgegeben wird
+
 	// Wird überschrieben
 /*	public SimpleList filter(SimpleFilter filter){
 		// neue Ergebnisliste wird erstellt
@@ -82,37 +80,37 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 		// Zugriff aufs nächste Element
 		@Override
 		public T next() {
-			// wieso wird nicht gleich tmp zurückgegeben?
+			// Referenz muss vor dem Return aufs nächste Element gesetzt werden
 			T tmp = current.getItem();
 			current = current.getNext();
 			return tmp;
 		}
 	}
 
-	// Hilfsklasse für Liste
+	// Hilfsklasse für Liste, <P> für neuen Scope
 	// static, weil ListElement nicht auf SimpleList-Instanzen zugreifen muss
-	private static class ListElement<T>{
+	private static class ListElement<P>{
 		// Es gibt ein Item ...
-		private T item;
+		private P item;
 		// ... mit einer Referenz auf das nächste Element
-		private ListElement<T> next;
+		private ListElement<P> next;
 
 		// Konstruktor
-		ListElement(T item) {
+		ListElement(P item) {
 			this.item = item;
 			this.next = null;
 		}
 
 		// Rückgabe des Elements
-		public T getItem() {
+		public P getItem() {
 			return item;
 		}
 
 		// gibt Nachfolger des Listenelements zurück, evtl. null
-		public ListElement<T> getNext() { return next; }
+		public ListElement<P> getNext() { return next; }
 
 		// Verändern des Nachfolger des Listenelements
-		public void setNext(ListElement<T> next) {
+		public void setNext(ListElement<P> next) {
 			this.next = next;
 		}
 	}

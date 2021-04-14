@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class SimpleListTests {
 
 	private final Logger logger = LogManager.getLogger();
+	// Integer, nicht int
 	private SimpleList<Integer> testList;
 
 	@BeforeEach
@@ -86,6 +86,14 @@ public class SimpleListTests {
 	}
 
 	@Test
+	void testAddDefault(){
+		logger.info("Testing AddDefault");
+		testList.addDefault(Integer.class);
+	}
+
+
+
+	@Test
 	void testMap() {
 		logger.info("Testing default map method by mapping every value to its square");
 		// Math.Pow = Basis, Exponent
@@ -96,6 +104,21 @@ public class SimpleListTests {
 			assertEquals(Math.pow(origIt.next(), 2), mapIt.next(), 0.1);
 		}
 	}
+
+	@Test
+	void testMapRiedhammer() {
+		SimpleList<String> sl = testList.map(Object::toString);
+
+		Iterator<Integer> i1 = testList.iterator();
+		Iterator<String> i2 = sl.iterator();
+
+		while(i1.hasNext() && i2.hasNext())
+		{assertEquals(i1.next().toString(), i2.next());}
+
+		assertFalse(i1.hasNext());
+		assertFalse(i2.hasNext());
+	}
+
 
 	@Test
 	void testSimpleListMapChangedType() {
